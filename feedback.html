@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <link rel="stylesheet" href="feedback.css">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Submit Your Feedback</h2>
+        <form id="feedbackForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required placeholder="Enter your name">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Enter your email">
+
+            <label for="feedback_text">Feedback:</label>
+            <textarea id="feedback_text" name="feedback_text" required placeholder="Write your feedback here"></textarea>
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+        
+    </div>
+
+    <script>
+        // Handle form submission
+        document.getElementById("feedbackForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const feedback_text = document.getElementById("feedback_text").value;
+
+            fetch("http://localhost:3000/submit-feedback", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name, email, feedback_text })
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                loadFeedback();
+            })
+            .catch(error => console.error("Error:", error));
+        });
+
+      
+
+        window.onload = loadFeedback;
+    </script>
+</body>
+</html>
+
