@@ -22,7 +22,7 @@ pipeline {
             steps {
                 bat '''
                   docker rm -f my-static-site || exit 0
-                  docker run -d --name my-static-site -p 8081:80 %DOCKER_IMAGE%:latest
+                  docker run -d --name my-static-site -p 8090:80 %DOCKER_IMAGE%:latest
                 '''
             }
         }
