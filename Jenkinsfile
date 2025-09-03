@@ -14,13 +14,13 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} -t ${DOCKER_IMAGE}:latest ."
+                bat "docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} -t ${DOCKER_IMAGE}:latest ."
             }
         }
 
         stage('Deploy') {
             steps {
-                sh '''
+                bat '''
                   docker rm -f my-static-site || true
                   docker run -d --name my-static-site -p 8081:80 ${DOCKER_IMAGE}:latest
                 '''
